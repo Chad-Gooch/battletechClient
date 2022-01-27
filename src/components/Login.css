@@ -1,0 +1,14 @@
+#logIn {
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    font-family: Cursive;
+}
+
+#logIn Button {
+    background-color: #228B22;
+}
+
+#logIn h2 {
+    font-weight: 800;
+}
