@@ -1,0 +1,11 @@
+body {
+    background-color: black;
+}
+
+#navigation {
+    background-color: lightgray;
+    display: block;
+    width: 150px;
+    padding: 15px;
+    border-radius: 4px;
+}

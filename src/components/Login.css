@@ -2,11 +2,11 @@
     align-items: center;
     text-align: center;
     margin: auto;
-    font-family: Cursive;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #logIn Button {
-    background-color: #228B22;
+    background-color: red;
 }
 
 #logIn h2 {

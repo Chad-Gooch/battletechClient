@@ -1,0 +1,11 @@
+#menuIcon {
+    border-radius: 25px;
+    height: 0px;
+    width: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#menuIcon img {
+    margin-top: -30px;
+}

@@ -1,39 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Outlet, Link} from "react-router-dom";
-import {Button} from 'reactstrap';
-import {
-    Navbar,
-    NavbarBrand,
-    Nav,
-    NavItem} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sitenav.css';
 
 const Sitenav = (props:any) => {
 
-    const [settingOne, setSettingOne] = useState(false);
-
-    const toggle = (tokenHolder:string) => {
-        if (tokenHolder !== '') {setSettingOne(false)
-        } else {setSettingOne(true)}
-    };
-
-    useEffect(()=>{
-        toggle(props.sessionToken);
-    },[props.sessionToken])
-
     return (
-        <div>
-            <Navbar className='navbar' expand="md">
-                <NavbarBrand className='brand' href="/">BattleTech</NavbarBrand>
-                <Nav className="ml-auto" navbar>
-                    <NavItem><Link className='navitem' to='/MechView'>View Mechs</Link></NavItem>
-                    <NavItem><Link className='navitem' to='/WpnView'>View Weapons</Link></NavItem>
-                    <NavItem><Link className='navitem' to='/TeamBuilder'>Team Builder</Link></NavItem>
-                    <NavItem >{(settingOne)?<Button className='signinbutton' href='/SignIn'>Sign In</Button>:<Button className='logoutButton' onClick={props.clearToken}>Logout</Button>}</NavItem>
-                </Nav>
-            </Navbar>
-
+        <div id='navigation'>
+            <br />
+            <div><Link className='div' to='/MechView'>View Mechs</Link></div>
+            <div><Link className='div' to='/WpnView'>View Weapons</Link></div>
+            <div><Link className='div' to='/Collection'>Collection</Link></div>
+            <div><Link className='div' to='/TeamBuilder'>TeamBuilder</Link></div>
+            {(props.isAdmin==='true')?<div><Link className='div' to='/MechAdmin'>Mech Admin</Link></div>:<div></div>}
+            {(props.isAdmin==='true')?<div><Link className='div' to='/WpnAdmin'>Wpn Admin</Link></div>:<div></div>}
+            <br />
             <Outlet />
         </div>
     );

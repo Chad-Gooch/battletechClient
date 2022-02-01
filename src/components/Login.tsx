@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';
@@ -6,6 +6,7 @@ import './Login.css';
 const Login = (props:any) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
 
     let handleSubmit = (event:any) => {       
         event.preventDefault();
@@ -21,7 +22,7 @@ const Login = (props:any) => {
             if (typeof(data.sessionToken) !== 'string') {
                 alert(`Invalid username or password`)
             } else {
-                props.updateToken(data.sessionToken);
+                props.updateToken(data.sessionToken, data.user.isAdmin);
                 window.location.href='/';
             }
         })

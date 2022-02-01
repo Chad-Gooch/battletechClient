@@ -23,7 +23,7 @@ const CreateLogin = (props:any) => {
                     if (typeof(data.sessionToken) !== 'string') {
                         alert('Email already registered.')
                     } else {
-                        props.updateToken(data.sessionToken);
+                        props.updateToken(data.sessionToken, data.user.isAdmin);
                         window.location.href='/'
                     }
             })
