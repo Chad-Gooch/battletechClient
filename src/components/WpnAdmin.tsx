@@ -34,7 +34,6 @@ const WpnAdmin = (props:any) => {
       }
 
       let addWpn = (event:any) => {
-        event.preventDefault();
             fetch(`http://localhost:5000/wpn/add`, {
                 method: 'POST',
                 body: JSON.stringify({ Wpn: {

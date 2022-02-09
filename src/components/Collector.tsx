@@ -66,7 +66,9 @@ const Collection = (props:any) => {
             return(
                 <tr key={name.id} style={{border:'none'}}>
                     <td>{name.model}</td>
-                    <td>{(collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>}</td>
+                    <td>
+                        {(props.token !== '')?((collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>):''}  
+                    </td>
                 </tr>
             ) 
             }
@@ -78,7 +80,9 @@ const Collection = (props:any) => {
             return(
                 <tr key={name.id} style={{border:'none'}}>
                     <td>{name.model}</td>
-                    <td>{(collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>}</td>
+                    <td>
+                        {(props.token !== '')?((collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>):''}
+                    </td>
                 </tr>
             ) 
             }
@@ -90,7 +94,9 @@ const Collection = (props:any) => {
             return(
                 <tr key={name.id} style={{border:'none'}}>
                     <td>{name.model}</td>
-                    <td>{(collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>}</td>
+                    <td>
+                        {(props.token !== '')?((collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>):''}    
+                    </td>
                 </tr>
             ) 
             }
@@ -102,7 +108,9 @@ const Collection = (props:any) => {
             return(
                 <tr key={name.id} style={{border:'none'}}>
                     <td>{name.model}</td>
-                    <td>{(collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>}</td>
+                    <td>
+                    {(props.token !== '')?((collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>):''}   
+                    </td>
                 </tr>
             ) 
             }

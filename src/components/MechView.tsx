@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {Table} from 'reactstrap';
+import {Table, Col, Button, Row} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { isPropertySignature } from 'typescript';
 
 const MechView = (props:any) => {
 
-    const [settingOne, setSettingOne] = useState(true);
+    const [sortMech, setSortMech] = useState([]);
 
     useEffect(()=>{
+        sortAll()
     },[props.mechHolder]);
 
     interface MechInterface {
@@ -46,7 +48,42 @@ const MechView = (props:any) => {
         })
     }
 
+    
+
+    const sortLight = () => {
+        let holder = props.mechHolder.filter((item:MechInterface) => item.weight < 37);
+        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}));
+    }
+
+    const sortMedium = () => {
+        let holder = props.mechHolder.filter((item:MechInterface) => ((item.weight > 36)&&(item.weight < 56)));
+        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}));
+    }
+
+    const sortHeavy = () => {
+        let holder = props.mechHolder.filter((item:MechInterface) => ((item.weight > 56)&&(item.weight < 76)));
+        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}));
+    }
+
+    const sortAssault = () => {
+        let holder = props.mechHolder.filter((item:MechInterface) => item.weight > 77);
+        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}));
+    }
+
+    const sortAll = () => {
+        let holder = props.mechHolder
+        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}))
+    }
+
     return (
+        <div>
+            <Row style={{width:'80%', margin:'auto'}}>
+                <Col><Button onClick={()=>sortAll()}>All</Button></Col>
+                <Col><Button onClick={()=>sortLight()}>Light</Button></Col>
+                <Col><Button onClick={()=>sortMedium()}>Medium</Button></Col>
+                <Col><Button onClick={()=>sortHeavy()}>Heavy</Button></Col>
+                <Col><Button onClick={()=>sortAssault()}>Assault</Button></Col>
+            </Row>
         <Table id="MechView" style={{width:'90%', margin:'auto', background:'rgba(169, 169, 169, 0.3)'}} dark>
             <thead>
                 <tr>
@@ -65,9 +102,10 @@ const MechView = (props:any) => {
                 </tr>
             </thead>
             <tbody>
-                {mechMapper(props.mechHolder)}
+                {mechMapper(sortMech)}
             </tbody>
-        </Table>         
+        </Table>
+        </div>         
     );
 }
 
