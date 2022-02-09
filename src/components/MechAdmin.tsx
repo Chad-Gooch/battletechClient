@@ -21,8 +21,7 @@ const MechAdmin = (props:any) => {
     useEffect(()=>{
     },[props.mechHolder]);
 
-    let addMech = (event:any) => {
-        event.preventDefault();
+    let addMech = () => {
             fetch(`http://localhost:5000/mech/add`, {
                 method: 'POST',
                 body: JSON.stringify({ mech: {
@@ -109,7 +108,7 @@ const MechAdmin = (props:any) => {
                         <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setLeftTorso(e.target.value)} type='number' name='leftTorso' value={leftTorso} required/></td>
                         <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setLeftArm(e.target.value)} type='number' name='leftArm' value={leftArm} required/></td>
                         <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setDLC(e.target.value)} type='text' name='DLC' value={DLC} required/></td>
-                        <td><Button  style={{width:'100px', color:'white'}}type='submit'>Add Mech</Button></td>
+                        <td><Button  style={{width:'100px', color:'white'}}onClick={() => addMech()}>Add Mech</Button></td>
                         <td style={{width:'100px', color:'white'}}></td>
                     </tr>
                 </Table>

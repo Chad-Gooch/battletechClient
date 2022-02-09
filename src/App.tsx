@@ -24,44 +24,68 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [mechHolder, setMechHolder] = useState([]);
   const [wpnHolder, setWpnHolder] = useState([]);
-
+  const [userData, setUserData] = useState<any>({collection:[],mech1:[],mech2:[],mech3:[],mech4:[]});
+  
   let anItem:any = localStorage.getItem('token');
   let anAdmin:any = localStorage.getItem('admin');
   
   useEffect(() => {
-    getMechs();
-    getWpns();
+    Promise.all([
+      fetch(`http://localhost:5000/mech/`),
+      fetch(`http://localhost:5000/wpn/`)
+    ]).then(function (responses) {
+      return Promise.all(responses.map(function (response) {
+        return response.json();
+      }));
+    }).then(function (data) {
+      setMechHolder(data[0]);
+      setWpnHolder(data[1])
+    }).catch(function (error) {
+      console.log(error);
+    });
+    getUser();    
     if (anItem){
       setSessionToken(anItem);
       setIsAdmin(anAdmin);
     };
-  }, [])
+  }, []);
 
-  const getMechs = () => {
-    fetch(`http://localhost:5000/mech/`,{
-           method: 'GET',
-           headers: new Headers ({
-               'Content-Type':'application/json'
-           })
-        }).then(
-           (response) => response.json()
-        ).then((data) => {setMechHolder(data)})
-  };
+  
+  const getUser = () => {
+    fetch(`http://localhost:5000/user/`, {
+      method: 'GET',
+      headers: new Headers ({
+        'Content-Type':'application/json',
+        'Authorization': 'Bearer ' + anItem
+      })
+    }).then((response) => response.json())
+    .then(res=>{
+      let col2;
+      if (res.collection === null){col2 = []}else{
+      col2 = JSON.parse(res.collection)};
+      let m12
+      if (res.mech1 === null) {m12 = []}else{
+      m12= JSON.parse(res.mech1)};
+      let m22;
+      if (res.mech2 === null) {m22 = []}else{
+      m22= JSON.parse(res.mech2)};
+      let m32;
+      if (res.mech3 === null) {m32 = []}else{
+      m32= JSON.parse(res.mech3)};
+      let m42;
+      if (res.mech3 === null) {m42 = []}else{
+      m42= JSON.parse(res.mech4)};
+      let total = {collection:col2, mech1:m12, mech2:m22, mech3:m32, mech4:m42}
+      console.log(total);
+      setUserData(total)
+    })
+    .catch(err => console.log(err))
+  }
 
-  const getWpns = () => {
-    fetch(`http://localhost:5000/wpn/`,{
-           method: 'GET',
-           headers: new Headers ({
-               'Content-Type':'application/json'
-           })
-        }).then(
-           (response) => response.json()
-        ).then((data) => {setWpnHolder(data)})
-  };
   
   const updateToken = (newToken:string, admin:any) => {
     localStorage.setItem('token', newToken);
-    localStorage.setItem('admin', admin)
+    localStorage.setItem('admin', admin);
     setSessionToken(newToken);
     setIsAdmin(admin);
   }
@@ -90,9 +114,9 @@ function App() {
           <Route path='/WpnView' element={<WpnView wpnHolder={wpnHolder}/>} />
           <Route path='/MechAdmin' element={<MechAdmin token={sessionToken} mechHolder={mechHolder}/>} />
           <Route path='/WpnAdmin' element={<WpnAdmin token={sessionToken} wpnHolder={wpnHolder}/>} />
-          <Route path='/Collection' element={<Collector token={sessionToken} mechHolder={mechHolder}/>} />
-          <Route path='/TeamBuilder' element={<TeamBuilder token={sessionToken} mechHolder={mechHolder} wpnHolder={wpnHolder}/>} />
-          <Route path='/SignIn' element={<SignIn updateToken={updateToken} />} />
+          <Route path='/Collection' element={<Collector token={sessionToken} mechHolder={mechHolder} setUserData={setUserData} userData={userData}/>} />
+          <Route path='/TeamBuilder' element={<TeamBuilder token={sessionToken} mechHolder={mechHolder} wpnHolder={wpnHolder} userData={userData}/>} />
+          <Route path='/SignIn' element={<SignIn updateToken={updateToken}/>} />
         </Route>
       </Routes>
     </BrowserRouter>
