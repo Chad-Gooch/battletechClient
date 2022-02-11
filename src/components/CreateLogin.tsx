@@ -1,19 +1,24 @@
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CreateLogin.css';
 //import APIURL from '../helpers/environment';
 
-const CreateLogin = (props:any) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
-    let handleSubmit = (event:any) => {
+export default class CreateLogin extends Component<any,any> {
+    constructor(props:any) {
+        super(props)
+        this.state = {
+            email:'',
+            password:''
+        }
+    }
+ 
+    handleSubmit = (event:any) => {
         event.preventDefault();
-        if (password.length >= 5) {
+        if (this.state.password.length >= 5) {
             fetch(`http://localhost:5000/user/register`, {
                 method: 'POST',
-                body: JSON.stringify({user:{email:email, password:password}}),
+                body: JSON.stringify({user:{email:this.state.email, password:this.state.password}}),
                 headers: new Headers ({
                     'Content-Type':'application/json'
                 })
@@ -23,29 +28,30 @@ const CreateLogin = (props:any) => {
                     if (typeof(data.sessionToken) !== 'string') {
                         alert('Email already registered.')
                     } else {
-                        props.updateToken(data.sessionToken, data.user.isAdmin);
+                        this.props.updateToken(data.sessionToken, data.user.isAdmin);
                         window.location.href='/'
                     }
             })
         } else {
-            alert(`Password must be at least 5 characters (${password.length}).`)
+            alert(`Password must be at least 5 characters (${this.state.password.length}).`)
         }
     }
 
+    render() {
     return(
         <div id='createLogin'>
             <h2>Create an Account</h2>
             <br />
             <br />
             <br />
-            <Form onSubmit= {handleSubmit}>
+            <Form onSubmit= {this.handleSubmit}>
                 <FormGroup>
                     <Label htmlFor='email'>Email Address</Label>
-                    <Input onChange={(e) => setEmail(e.target.value)} type='email' name='email' value={email} required/>
+                    <Input onChange={(e) => this.setState({email:e.target.value})} type='email' name='email' value={this.state.email} required/>
                 </FormGroup>
                 <FormGroup>
                 <Label htmlFor='password'>Password</Label>
-                    <Input onChange={(e) => setPassword(e.target.value)} type='password' name='password' value={password} required/>
+                    <Input onChange={(e) => this.setState({password:e.target.value})} type='password' name='password' value={this.state.password} required/>
                 </FormGroup>
                 <Button type='submit'>Sign Up</Button>
             </Form>
@@ -54,10 +60,8 @@ const CreateLogin = (props:any) => {
             <br />
             <div className='loginSwitch'>
                 <h3>Already have an account?</h3>
-                <Button  onClick={()=>props.setSettingOne(!props.current)}>Sign in here.</Button>
+                <Button  onClick={()=>this.props.changeSettingOne()}>Sign in here.</Button>
             </div>
         </div>
     )
-}
-
-export default CreateLogin;
+}}

@@ -1,34 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import {Table, Col, Button, Row} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { isPropertySignature } from 'typescript';
 
-const MechView = (props:any) => {
+interface MechInterface {
+    id: number;
+    model: string;
+    DLC: string;
+    weight: number;
+    freeTon: number;
+    walk: number;
+    maxJet: number;
+    head: string;
+    rightArm: string;
+    rightTorso: string;
+    center: string;
+    leftTorso: string;
+    leftArm: string;
+  }
 
-    const [sortMech, setSortMech] = useState([]);
+export default class MechView extends Component <any,any> {
+    constructor(props:any) {
+        super(props)
+        this.state = {
+            sortMech:[]
+        }
+    };
 
-    useEffect(()=>{
-        sortAll()
-    },[props.mechHolder]);
-
-    interface MechInterface {
-        id: number;
-        model: string;
-        DLC: string;
-        weight: number;
-        freeTon: number;
-        walk: number;
-        maxJet: number;
-        head: string;
-        rightArm: string;
-        rightTorso: string;
-        center: string;
-        leftTorso: string;
-        leftArm: string;
-      }
-
-    const mechMapper = (mechs:MechInterface[]) => {
-        return mechs.map((name:MechInterface) => {
+     mechMapper = (machine:MechInterface[]) => {
+        return machine.map((name:MechInterface) => {
             return(
                 <tr key={name.id}>
                     <td>{name.model}</td>
@@ -50,39 +49,42 @@ const MechView = (props:any) => {
 
     
 
-    const sortLight = () => {
-        let holder = props.mechHolder.filter((item:MechInterface) => item.weight < 37);
-        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}));
+     sortLight = () => {
+        let holder = this.props.mechHolder.filter((item:MechInterface) => item.weight < 37);
+        this.setState({sortMech:holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight})});
     }
 
-    const sortMedium = () => {
-        let holder = props.mechHolder.filter((item:MechInterface) => ((item.weight > 36)&&(item.weight < 56)));
-        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}));
+     sortMedium = () => {
+        let holder = this.props.mechHolder.filter((item:MechInterface) => ((item.weight > 36)&&(item.weight < 56)));
+        this.setState({sortMech:holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight})});
     }
 
-    const sortHeavy = () => {
-        let holder = props.mechHolder.filter((item:MechInterface) => ((item.weight > 56)&&(item.weight < 76)));
-        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}));
+     sortHeavy = () => {
+        let holder = this.props.mechHolder.filter((item:MechInterface) => ((item.weight > 56)&&(item.weight < 76)));
+        this.setState({sortMech:holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight})});
     }
 
-    const sortAssault = () => {
-        let holder = props.mechHolder.filter((item:MechInterface) => item.weight > 77);
-        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}));
+     sortAssault = () => {
+        let holder = this.props.mechHolder.filter((item:MechInterface) => item.weight > 77);
+        this.setState({sortMech:holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight})});
     }
 
-    const sortAll = () => {
-        let holder = props.mechHolder
-        setSortMech(holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight}))
+     sortAll = () => {
+        let holder = this.props.mechHolder
+        this.setState({sortMech:holder.sort(function (a:MechInterface,b:MechInterface){return a.weight - b.weight})})
     }
 
+    componentDidMount(){this.sortAll()}
+
+    render() {
     return (
         <div>
             <Row style={{width:'80%', margin:'auto'}}>
-                <Col><Button onClick={()=>sortAll()}>All</Button></Col>
-                <Col><Button onClick={()=>sortLight()}>Light</Button></Col>
-                <Col><Button onClick={()=>sortMedium()}>Medium</Button></Col>
-                <Col><Button onClick={()=>sortHeavy()}>Heavy</Button></Col>
-                <Col><Button onClick={()=>sortAssault()}>Assault</Button></Col>
+                <Col><Button onClick={()=>this.sortAll()}>All</Button></Col>
+                <Col><Button onClick={()=>this.sortLight()}>Light</Button></Col>
+                <Col><Button onClick={()=>this.sortMedium()}>Medium</Button></Col>
+                <Col><Button onClick={()=>this.sortHeavy()}>Heavy</Button></Col>
+                <Col><Button onClick={()=>this.sortAssault()}>Assault</Button></Col>
             </Row>
         <Table id="MechView" style={{width:'90%', margin:'auto', background:'rgba(169, 169, 169, 0.3)'}} dark>
             <thead>
@@ -102,11 +104,10 @@ const MechView = (props:any) => {
                 </tr>
             </thead>
             <tbody>
-                {mechMapper(sortMech)}
+                {this.mechMapper(this.state.sortMech)}
             </tbody>
         </Table>
         </div>         
     );
 }
-
-export default MechView;
+}

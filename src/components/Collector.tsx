@@ -1,115 +1,118 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Row, Col, Table} from 'reactstrap';
 
-const Collection = (props:any) => {
+interface MechInterface {
+    id: number;
+    model: string;
+    DLC: string;
+    weight: number;
+    freeTon: number;
+    walk: number;
+    maxJet: number;
+    head: string;
+    rightArm: string;
+    rightTorso: string;
+    center: string;
+    leftTorso: string;
+    leftArm: string;
+  }
 
-    const [count, setCount] = useState(1);
-    const [collection, setCollection] = useState<any>([]);
+export default class Collection extends Component<any,any>{
+    constructor(props:any) {
+        super(props)
+        this.state = {
+            count:[],
+            collection:this.props.userData.collection
+        }
+    };
 
-    useEffect(()=>{setCollection(props.userData.collection)},[props.userData])
-
-    interface MechInterface {
-        id: number;
-        model: string;
-        DLC: string;
-        weight: number;
-        freeTon: number;
-        walk: number;
-        maxJet: number;
-        head: string;
-        rightArm: string;
-        rightTorso: string;
-        center: string;
-        leftTorso: string;
-        leftArm: string;
-      }
     
-    const saveCollection = () => {
+     saveCollection = () => {
         fetch(`http://localhost:5000/user/collection`, {
                 method: 'PUT',
                 body: JSON.stringify({ collection: {
-                        collection:`[${collection}]`
+                        collection:`[${this.state.collection}]`
                 }}),
                 headers: new Headers ({
                     'Content-Type':'application/json',
-                    'Authorization': 'Bearer ' + props.token
+                    'Authorization': 'Bearer ' + this.props.token
                 })
             }).then(
                 (response) => response.json()
             ).catch(err => console.log(err))
     }
 
-    const addToCollection = (mechId:number) => {
-        const Collect = collection;
+     addToCollection = (mechId:number) => {
+        const Collect = this.state.collection;
         Collect.push(mechId);
-        setCollection(Collect);
-        saveCollection();
+        this.setState({collection:Collect});
+        this.saveCollection();
         localStorage.setItem('collection',Collect);
-        setCount(count + 1);
+        this.setState({count:this.state.count + 1});
     }
 
-    const removeCollection = (mechId:number) => {
-        let Collect = collection
+     removeCollection = (mechId:number) => {
+        let Collect = this.state.collection
         for (let i=0;i<Collect.length;i++) {
             if (Collect[i]===mechId) {Collect.splice(i,1)}
         };
-        setCollection(Collect);
-        saveCollection();
+        this.setState(Collect);
+        this.saveCollection();
         localStorage.setItem('collection',Collect);
-        setCount(count + 1);
+        this.setState({count:this.state.count + 1});
     }
 
-    const mechMapperLight = (mechs:MechInterface[]) => {
+     mechMapperLight = (mechs:MechInterface[]) => {
         return mechs.map((name:MechInterface) => {
             if (name.weight < 36){
             return(
                 <tr key={name.id} style={{border:'none'}}>
                     <td>{name.model}</td>
                     <td>
-                        {(props.token !== '')?((collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>):''}  
+                        {(this.props.token !== '')?((this.state.collection.includes(name.id))?<button style={{color:'red'}}onClick={() => this.removeCollection(name.id)}>X</button>:<button onClick={() => this.addToCollection(name.id)}>_</button>):''}  
                     </td>
                 </tr>
             ) 
             }
         })
     }
-    const mechMapperMed = (mechs:MechInterface[]) => {
+     mechMapperMed = (mechs:MechInterface[]) => {
         return mechs.map((name:MechInterface) => {
             if ((name.weight > 36)&&(name.weight < 56)){
             return(
                 <tr key={name.id} style={{border:'none'}}>
                     <td>{name.model}</td>
                     <td>
-                        {(props.token !== '')?((collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>):''}
+                        {(this.props.token !== '')?((this.state.collection.includes(name.id))?<button style={{color:'red'}}onClick={() => this.removeCollection(name.id)}>X</button>:<button onClick={() => this.addToCollection(name.id)}>_</button>):''}
                     </td>
                 </tr>
             ) 
             }
         })
     }
-    const mechMapperHeavy = (mechs:MechInterface[]) => {
+     mechMapperHeavy = (mechs:MechInterface[]) => {
         return mechs.map((name:MechInterface) => {
             if ((name.weight > 56)&&(name.weight < 76)){
             return(
                 <tr key={name.id} style={{border:'none'}}>
                     <td>{name.model}</td>
                     <td>
-                        {(props.token !== '')?((collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>):''}    
+                        {(this.props.token !== '')?((this.state.collection.includes(name.id))?<button style={{color:'red'}}onClick={() => this.removeCollection(name.id)}>X</button>:<button onClick={() => this.addToCollection(name.id)}>_</button>):''}    
                     </td>
                 </tr>
             ) 
             }
         })
     }
-    const mechMapperAssault = (mechs:MechInterface[]) => {
+     mechMapperAssault = (mechs:MechInterface[]) => {
         return mechs.map((name:MechInterface) => {
             if (name.weight > 76){
             return(
                 <tr key={name.id} style={{border:'none'}}>
                     <td>{name.model}</td>
                     <td>
-                    {(props.token !== '')?((collection.includes(name.id))?<button style={{color:'red'}}onClick={() => removeCollection(name.id)}>X</button>:<button onClick={() => addToCollection(name.id)}>_</button>):''}   
+                    {(this.props.token !== '')?((this.state.collection.includes(name.id))?<button style={{color:'red'}}onClick={() => this.removeCollection(name.id)}>X</button>:<button onClick={() => this.addToCollection(name.id)}>_</button>):''}   
                     </td>
                 </tr>
             ) 
@@ -117,6 +120,7 @@ const Collection = (props:any) => {
         })
     }
 
+    render() {
     return (
         <Container className="collection">
             <Row>
@@ -124,7 +128,7 @@ const Collection = (props:any) => {
                         <h3 style={{width:'200px', color:'white', background:'black'}}>Light</h3>
                     <Table id='LightCollection' style={{width:'200px', color:'white', background:'black'}}>
                         <tbody>
-                            {mechMapperLight(props.mechHolder)}
+                            {this.mechMapperLight(this.props.mechHolder)}
                         </tbody>
                     </Table>
                 </Col>
@@ -132,7 +136,7 @@ const Collection = (props:any) => {
                         <h3 style={{width:'200px', color:'white', background:'black'}}>Medium</h3>
                     <Table id='MedCollection' style={{width:'200px', color:'white', background:'black'}} dark>
                         <tbody>
-                            {mechMapperMed(props.mechHolder)}
+                            {this.mechMapperMed(this.props.mechHolder)}
                         </tbody>
                     </Table>
                 </Col>
@@ -140,7 +144,7 @@ const Collection = (props:any) => {
                         <h3 style={{width:'200px', color:'white', background:'black'}}>Heavy</h3>
                     <Table id='HeavyCollection' style={{width:'200px', color:'white', background:'black'}} dark>
                         <tbody>
-                            {mechMapperHeavy(props.mechHolder)}
+                            {this.mechMapperHeavy(this.props.mechHolder)}
                         </tbody>
                     </Table>
                 </Col>
@@ -148,7 +152,7 @@ const Collection = (props:any) => {
                         <h3 style={{width:'200px', color:'white', background:'black'}}>Assault</h3>
                     <Table id='AssaultCollection' style={{width:'200px', color:'white', background:'black'}} dark>
                         <tbody>
-                            {mechMapperAssault(props.mechHolder)}
+                            {this.mechMapperAssault(this.props.mechHolder)}
                         </tbody>
                     </Table>
                 </Col>        
@@ -156,5 +160,4 @@ const Collection = (props:any) => {
         </Container>
     );
 }
-
-export default Collection;
+}

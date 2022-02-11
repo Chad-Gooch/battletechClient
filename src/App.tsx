@@ -102,6 +102,14 @@ function App() {
         setSettingTwo(!settingTwo)
     }
 
+  const childProps = { 
+    token:sessionToken,
+    mechHolder:mechHolder,
+    setUserData:setUserData,
+    wpnHolder:wpnHolder,
+    userData:userData,
+    }
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -110,12 +118,12 @@ function App() {
       <Routes>
         <Route path='/'>
           <Route path='/' />
-          <Route path='/MechView' element={<MechView mechHolder={mechHolder}/>} />
-          <Route path='/WpnView' element={<WpnView wpnHolder={wpnHolder}/>} />
-          <Route path='/MechAdmin' element={<MechAdmin token={sessionToken} mechHolder={mechHolder}/>} />
-          <Route path='/WpnAdmin' element={<WpnAdmin token={sessionToken} wpnHolder={wpnHolder}/>} />
-          <Route path='/Collection' element={<Collector token={sessionToken} mechHolder={mechHolder} setUserData={setUserData} userData={userData}/>} />
-          <Route path='/TeamBuilder' element={<TeamBuilder token={sessionToken} mechHolder={mechHolder} wpnHolder={wpnHolder} userData={userData}/>} />
+          <Route path='/MechView' element={<MechView {...childProps}/>} />
+          <Route path='/WpnView' element={<WpnView {...childProps}/>} />
+          <Route path='/MechAdmin' element={<MechAdmin {...childProps}/>} />
+          <Route path='/WpnAdmin' element={<WpnAdmin {...childProps}/>} />
+          <Route path='/Collection' element={<Collector {...childProps}/>} />
+          <Route path='/TeamBuilder' element={<TeamBuilder {...childProps}/>} />
           <Route path='/SignIn' element={<SignIn updateToken={updateToken}/>} />
         </Route>
       </Routes>

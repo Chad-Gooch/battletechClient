@@ -1,21 +1,30 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignIn.css';
 import Login from './Login';
 import CreateLogin from './CreateLogin';
 
-const SignIn = (props:any) => {
+export default class SignIn extends Component<any,any> {
+    constructor(props:any) {
+        super(props)
+        this.state = {
+            settingOne:true,
+        }
+    }
 
-    const [settingOne, setSettingOne] = useState(true);
+    changeSettingOne = () => {
+        this.setState({settingOne:(!this.state.settingOne)})
+    }
 
-    useEffect(()=>{
-    },[]);
+    toChildren = {
+        updateToken:this.props.updateToken, 
+        changeSettingOne:this.changeSettingOne,
+    }
 
+    render() {
     return (
         <div className="loginScreen">            
-            {settingOne ? <Login updateToken={props.updateToken} setSettingOne={setSettingOne} current={settingOne} changeCount={props.changeCount} setChangeCount={props.setChangeCount}/> : <CreateLogin updateToken={props.updateToken} setSettingOne={setSettingOne} current={settingOne} changeCount={props.changeCount} setChangeCount={props.setChangeCount} />}
+            {(this.state.settingOne) ? <Login {...this.toChildren}/> : <CreateLogin {...this.toChildren} /> }
         </div>
     );
-}
-
-export default SignIn;
+}}

@@ -1,110 +1,116 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import {Table, Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WpnPopup from './WpnPopup';
 
-const WpnAdmin = (props:any) => {
+interface WpnInterface {
+    id: number;
+    model: string;
+    type: string;
+    weight: number;
+    shots: number;
+    damage: number;
+    stability: number;
+    heat: number;
+    minRange: number;
+    maxRange: number;
+    DLC: string|null;
+  }
 
-    const [model, setModel] = useState<any>('');
-    const [type, setType] = useState<any>('');
-    const [weight, setWeight] = useState<any>();
-    const [shots, setShots] = useState<any>();
-    const [damage, setDamage] = useState<any>();
-    const [stability, setStability] = useState<any>();
-    const [heat, setHeat] = useState<any>();
-    const [minRange, setMinRange] = useState<any>();
-    const [maxRange, setMaxRange] = useState<any>();
-    const [DLC, setDLC] = useState<any>('Base');
+export default class WpnAdmin extends Component<any,any> {
+    constructor(props:any) {
+        super(props)
+        this.state = {
+            model:'',
+            type:'',
+            weight:'',
+            shots:'',
+            damage:'',
+            stability:'',
+            heat:'',
+            minRange:'',
+            maxRange:'',
+            DLC:'Base'
+        }
+    }
 
-    useEffect(()=>{
-    },[props.wpnHolder]);
 
-    interface WpnInterface {
-        id: number;
-        model: string;
-        type: string;
-        weight: number;
-        shots: number;
-        damage: number;
-        stability: number;
-        heat: number;
-        minRange: number;
-        maxRange: number;
-        DLC: string|null;
-      }
 
-      let addWpn = (event:any) => {
+       addWpn = (event:any) => {
             fetch(`http://localhost:5000/wpn/add`, {
                 method: 'POST',
                 body: JSON.stringify({ Wpn: {
-                    model:model,
-                    type:type,
-                    weight:weight,
-                    shots:shots,
-                    damage:damage,
-                    stability:stability,
-                    heat:heat,
-                    minRange:minRange,
-                    maxRange:maxRange,
-                    DLC:DLC
+                    model:this.state.model,
+                    type:this.state.type,
+                    weight:this.state.weight,
+                    shots:this.state.shots,
+                    damage:this.state.damage,
+                    stability:this.state.stability,
+                    heat:this.state.heat,
+                    minRange:this.state.minRange,
+                    maxRange:this.state.maxRange,
+                    DLC:this.state.DLC
                 }}),
                 headers: new Headers ({
                     'Content-Type':'application/json',
-                    'Authorization': 'Bearer ' + props.token
+                    'Authorization': 'Bearer ' + this.props.token
                 })
             }).then(
                 (response) => response.json()
             ).catch(err => console.log(err))
     }
 
-    const wpnMapper = (weapons:WpnInterface[]) => {
+     wpnMapper = (weapons:WpnInterface[]) => {
         return weapons.map((name:WpnInterface) => {
             return(
-                    <WpnPopup wpn={name} token={props.token} />
+                    <WpnPopup key={name.id} wpn={name} token={this.props.token} />
             )
         })
     }
 
-    return (
-        <div>
-            <br />
-            <br />
-            <form onSubmit = {addWpn}>
-                <Table style={{width:'80%', margin:'auto'}} dark>
-                    <tr>
-                        <th style={{width:'100px', color:'white'}}>model</th>
-                        <th style={{width:'100px', color:'white'}}>type</th>
-                        <th style={{width:'100px', color:'white'}}>weight</th>
-                        <th style={{width:'100px', color:'white'}}>shots</th>
-                        <th style={{width:'100px', color:'white'}}>damage</th>
-                        <th style={{width:'100px', color:'white'}}>stability</th>
-                        <th style={{width:'100px', color:'white'}}>heat</th>
-                        <th style={{width:'100px', color:'white'}}>minRange</th>
-                        <th style={{width:'100px', color:'white'}}>maxRange</th>
-                        <th style={{width:'100px', color:'white'}}>DLC</th>
-                        <th style={{width: '100px', color:'black'}}>____</th>
-                        <th style={{width: '100px',color:'black'}}>____</th>
-                    </tr>
-                    <tr>
-                        <td><input  style={{width:'100px', color:'white'}} onChange={(e) => setModel(e.target.value)} type='text' name='model' value={model} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setType(e.target.value)} type='text' name='type' value={type} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setWeight(e.target.value)} type='number' name='weight' value={weight} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setShots(e.target.value)} type='number' name='shots' value={shots} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setDamage(e.target.value)} type='number' name='damage' value={damage} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setStability(e.target.value)} type='number' name='stability' value={stability} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setHeat(e.target.value)} type='number' name='heat' value={heat} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setMinRange(e.target.value)} type='number' name='minRange' value={minRange} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setMaxRange(e.target.value)} type='number' name='maxRange' value={maxRange} required/></td>
-                        <td><input  style={{width:'100px', color:'white'}}onChange={(e) => setDLC(e.target.value)} type='text' name='DLC' value={DLC} required/></td>
-                        <td><Button  style={{width:'100px', color:'white'}}type='submit'>Add Wpn</Button></td>
-                        <td style={{width:'100px', color:'white'}}></td>
-                    </tr>
-                </Table>
-            </form>
-            <br />
-                {wpnMapper(props.wpnHolder)}
-        </div>
-    );
-}
-
-export default WpnAdmin;
+    render() {
+        return (
+            <div>
+                <br />
+                <br />
+                <form onSubmit = {this.addWpn}>
+                    <Table style={{width:'80%', margin:'auto'}} dark>
+                        <thead>
+                        <tr>
+                            <th style={{width:'100px', color:'white'}}>model</th>
+                            <th style={{width:'100px', color:'white'}}>type</th>
+                            <th style={{width:'100px', color:'white'}}>weight</th>
+                            <th style={{width:'100px', color:'white'}}>shots</th>
+                            <th style={{width:'100px', color:'white'}}>damage</th>
+                            <th style={{width:'100px', color:'white'}}>stability</th>
+                            <th style={{width:'100px', color:'white'}}>heat</th>
+                            <th style={{width:'100px', color:'white'}}>minRange</th>
+                            <th style={{width:'100px', color:'white'}}>maxRange</th>
+                            <th style={{width:'100px', color:'white'}}>DLC</th>
+                            <th style={{width: '100px', color:'black'}}>____</th>
+                            <th style={{width: '100px',color:'black'}}>____</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({model:e.target.value})} type='text' name='model' value={this.state.model} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({type:e.target.value})} type='text' name='type' value={this.state.type} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({weight:e.target.value})} type='number' name='weight' value={this.state.weight} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({shots:e.target.value})} type='number' name='shots' value={this.state.shots} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({damage:e.target.value})} type='number' name='damage' value={this.state.damage} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({stability:e.target.value})} type='number' name='stability' value={this.state.stability} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({heat:e.target.value})} type='number' name='heat' value={this.state.heat} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({minRange:e.target.value})} type='number' name='minRange' value={this.state.minRange} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({maxRange:e.target.value})} type='number' name='maxRange' value={this.state.maxRange} required/></td>
+                            <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({DLC:e.target.value})} type='text' name='DLC' value={this.state.DLC} required/></td>
+                            <td><Button  style={{width:'100px', color:'white'}}type='submit'>Add Wpn</Button></td>
+                            <td style={{width:'100px', color:'white'}}></td>
+                        </tr>
+                        </tbody>
+                    </Table>
+                </form>
+                <br />
+                    {this.wpnMapper(this.props.wpnHolder)}
+            </div>
+        );
+}}

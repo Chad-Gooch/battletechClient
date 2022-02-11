@@ -1,18 +1,36 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import LoadOut from './LoadOut';
+import {Container, Row, Col} from 'reactstrap';
 
-const TeamBuilder = (props:any) => {
 
-    const [settingOne, setSettingOne] = useState(true);
+export default class TeamBuilder extends Component<any,any> {
+   constructor(props:any) {
+       super(props)
+       this.state = {
+        mech1: [],
+        mech2: [],
+        mech3: [],
+        mech4: [],
+       }
+    };
 
-    useEffect(()=>{
-    },[]);
 
-    return (
-        <div className="TeamBuilder">   
-            <h3>TeamBuilder</h3>         
-        </div>
-    );
+
+    render() {
+        return (
+            <div className="TeamBuilder">   
+                <h3>TeamBuilder</h3>
+                <Container>
+                    <Row>
+                        <Col></Col>
+                        <Col></Col>
+                        <Col></Col>
+                        <Col></Col>
+                    </Row>
+                </Container>
+                <LoadOut />
+            </div>
+        );
+    }
 }
-
-export default TeamBuilder;
