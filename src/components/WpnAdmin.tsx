@@ -92,7 +92,7 @@ export default class WpnAdmin extends Component<any,any> {
                             <th style={{width: '100px',color:'black'}}>____</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        
                         <tr>
                             <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({model:e.target.value})} type='text' name='model' value={this.state.model} required/></td>
                             <td><input  style={{width:'100px', color:'white'}}onChange={(e) => this.setState({type:e.target.value})} type='text' name='type' value={this.state.type} required/></td>
@@ -107,7 +107,7 @@ export default class WpnAdmin extends Component<any,any> {
                             <td><Button  style={{width:'100px', color:'white'}}type='submit'>Add Wpn</Button></td>
                             <td style={{width:'100px', color:'white'}}></td>
                         </tr>
-                        </tbody>
+                        
                     </Table>
                 </form>
                 <br />
