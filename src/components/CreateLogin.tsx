@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CreateLogin.css';
-//import APIURL from '../helpers/environment';
+import APIURL from '../helpers/environment';
 
 export default class CreateLogin extends Component<any,any> {
     constructor(props:any) {
@@ -16,7 +16,7 @@ export default class CreateLogin extends Component<any,any> {
     handleSubmit = (event:any) => {
         event.preventDefault();
         if (this.state.password.length >= 5) {
-            fetch(`http://localhost:5000/user/register`, {
+            fetch(`${APIURL}/user/register`, {
                 method: 'POST',
                 body: JSON.stringify({user:{email:this.state.email, password:this.state.password}}),
                 headers: new Headers ({

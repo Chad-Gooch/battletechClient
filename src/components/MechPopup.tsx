@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Table, Button} from 'reactstrap';
+import APIURL from '../helpers/environment';
  
 export default class MechPopup extends Component<any,any>{
     constructor(props:any) {
@@ -21,7 +22,7 @@ export default class MechPopup extends Component<any,any>{
     }
 
      mechUpdate = () => {
-        fetch(`http://localhost:5000/mech/update/${this.props.mech.id}`, {
+        fetch(`${APIURL}/mech/update/${this.props.mech.id}`, {
                 method: 'PUT',
                 body: JSON.stringify({ mech: {
                         model:this.state.model,
@@ -47,7 +48,7 @@ export default class MechPopup extends Component<any,any>{
     }
 
      mechDelete = () => {
-        fetch(`http://localhost:5000/mech/delete/${this.props.mech.id}`, {
+        fetch(`${APIURL}/mech/delete/${this.props.mech.id}`, {
             method: 'DELETE',
             headers: new Headers ({
                 'Content-Type': 'application/json',

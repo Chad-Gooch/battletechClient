@@ -16,6 +16,7 @@ import TeamBuilder from './components/TeamBuilder';
 import SignIn from './components/SignIn';
 import Banner from './components/Banner';
 import './App.css';
+import APIURL from './helpers/environment';
 
 
 function App() {
@@ -31,8 +32,8 @@ function App() {
   
   useEffect(() => {
     Promise.all([
-      fetch(`http://localhost:5000/mech/`),
-      fetch(`http://localhost:5000/wpn/`)
+      fetch(`${APIURL}/mech/`),
+      fetch(`${APIURL}/wpn/`)
     ]).then(function (responses) {
       return Promise.all(responses.map(function (response) {
         return response.json();
@@ -52,7 +53,7 @@ function App() {
 
   
   const getUser = () => {
-    fetch(`http://localhost:5000/user/`, {
+    fetch(`${APIURL}/user/`, {
       method: 'GET',
       headers: new Headers ({
         'Content-Type':'application/json',

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Table, Button} from 'reactstrap';
+import APIURL from '../helpers/environment';
  
 export default class WpnPopup extends Component<any,any> {
     constructor(props:any) {
@@ -19,7 +20,7 @@ export default class WpnPopup extends Component<any,any> {
     }
 
     wpnUpdate = () => {
-            fetch(`http://localhost:5000/wpn/update/${this.props.wpn.id}`, {
+            fetch(`${APIURL}/wpn/update/${this.props.wpn.id}`, {
                 method: 'PUT',
                 body: JSON.stringify({ Wpn: {
                     model:this.state.model,
@@ -43,7 +44,7 @@ export default class WpnPopup extends Component<any,any> {
     }
 
     wpnDelete = () => {
-        fetch(`http://localhost:5000/wpn/delete/${this.props.wpn.id}`, {
+        fetch(`${APIURL}/wpn/delete/${this.props.wpn.id}`, {
             method: 'DELETE',
             headers: new Headers ({
                 'Content-Type': 'application/json',

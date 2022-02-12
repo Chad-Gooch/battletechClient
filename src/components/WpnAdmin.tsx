@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Table, Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WpnPopup from './WpnPopup';
+import APIURL from '../helpers/environment';
 
 interface WpnInterface {
     id: number;
@@ -37,7 +38,7 @@ export default class WpnAdmin extends Component<any,any> {
 
 
        addWpn = (event:any) => {
-            fetch(`http://localhost:5000/wpn/add`, {
+            fetch(`${APIURL}/wpn/add`, {
                 method: 'POST',
                 body: JSON.stringify({ Wpn: {
                     model:this.state.model,

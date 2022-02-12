@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Table, Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MechPopup from './MechPopup';
+import APIURL from '../helpers/environment';
 
 interface MechInterface {
     id: number;
@@ -39,7 +40,7 @@ export default class MechAdmin extends Component<any,any> {
     }
 
      addMech = () => {
-            fetch(`http://localhost:5000/mech/add`, {
+            fetch(`${APIURL}/mech/add`, {
                 method: 'POST',
                 body: JSON.stringify({ mech: {
                         model:this.state.model,

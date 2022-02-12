@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Row, Col, Table} from 'reactstrap';
+import APIURL from '../helpers/environment';
 
 interface MechInterface {
     id: number;
@@ -29,7 +30,7 @@ export default class Collection extends Component<any,any>{
 
     
      saveCollection = () => {
-        fetch(`http://localhost:5000/user/collection`, {
+        fetch(`${APIURL}/user/collection`, {
                 method: 'PUT',
                 body: JSON.stringify({ collection: {
                         collection:`[${this.state.collection}]`
