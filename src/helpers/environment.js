@@ -7,7 +7,7 @@ switch (window.location.hostname) {
         APIURL = 'http://localhost:5000';
         break;
     // this is the deployed name of your React application
-    case 'https://gooch-battletech-client.herokuapp.com/':
+    case 'gooch-battletech-client.herokuapp.com/':
                 //this is the base URL of your deployed server
         APIURL = 'https://gooch-battletech-server.herokuapp.com/'
 }
