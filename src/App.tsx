@@ -51,6 +51,7 @@ function App() {
     };
   }, []);
 
+  useEffect(()=>{getUser()},[sessionToken])
   
   const getUser = () => {
     if (sessionToken !== '') {
