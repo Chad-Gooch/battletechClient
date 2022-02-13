@@ -53,6 +53,7 @@ function App() {
 
   
   const getUser = () => {
+    if (sessionToken !== '') {
     fetch(`${APIURL}/user/`, {
       method: 'GET',
       headers: new Headers ({
@@ -81,7 +82,7 @@ function App() {
       setUserData(total)
     })
     .catch(err => console.log(err))
-  }
+  }}
 
   
   const updateToken = (newToken:string, admin:any) => {
