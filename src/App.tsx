@@ -66,20 +66,11 @@ function App() {
       let col2;
       if (res.collection === null){col2 = []}else{
       col2 = JSON.parse(res.collection)};
-      let m12
-      if (res.mech1 === null) {m12 = []}else{
-      m12= JSON.parse(res.mech1)};
-      let m22;
-      if (res.mech2 === null) {m22 = []}else{
-      m22= JSON.parse(res.mech2)};
-      let m32;
-      if (res.mech3 === null) {m32 = []}else{
-      m32= JSON.parse(res.mech3)};
-      let m42;
-      if (res.mech3 === null) {m42 = []}else{
-      m42= JSON.parse(res.mech4)};
+      let m12= JSON.parse(res.mech1);
+      let m22= JSON.parse(res.mech2);
+      let m32= JSON.parse(res.mech3);
+      let m42= JSON.parse(res.mech4);
       let total = {collection:col2, mech1:m12, mech2:m22, mech3:m32, mech4:m42}
-      console.log(total);
       setUserData(total)
     })
     .catch(err => console.log(err))

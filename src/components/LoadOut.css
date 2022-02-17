@@ -1,0 +1,43 @@
+.mechPiece td {
+    height: 35px;
+    color: white;
+    background-color: darkslategrey;
+    border: solid, white;
+    margin: auto;
+    width: 150px;
+    text-align: center;
+}
+
+.mechPiece, .mechLeg{
+    padding: 0px;
+    width: 150px;
+    margin: auto;
+}
+
+.mechPiece div{
+    text-align: center;
+}
+
+.mechLeg td {
+    height: 35px;
+    color: white;
+    background-color: darkslategrey;
+    border: solid, white;
+    margin: auto;
+    width: 150px;
+    text-align: center;
+}
+
+.mechEquip {
+    height: 35px;
+    width: 150px;
+    background-color: black;
+    color: white;
+    padding: 0;
+}
+
+.mechColumn {
+    padding: 0px;
+    margin: auto;
+    width: 200px;
+}

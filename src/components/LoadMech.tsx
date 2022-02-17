@@ -18,7 +18,7 @@ interface MechInterface {
     leftArm: string;
   }
 
-export default class MechView extends Component <any,any> {
+export default class LoadMech extends Component <any,any> {
     constructor(props:any) {
         super(props)
         this.state = {
@@ -29,7 +29,7 @@ export default class MechView extends Component <any,any> {
      mechMapper = (machine:MechInterface[]) => {
         return machine.map((name:MechInterface) => {
             return(
-                <tr key={name.id}>
+                <tr key={name.id} onClick={()=>this.props.toggleMech(name.id)}>
                     <td>{name.model}</td>
                     <td>{name.weight}</td>
                     <td>{name.freeTon}</td>
@@ -75,6 +75,7 @@ export default class MechView extends Component <any,any> {
     }
 
     componentDidMount(){this.sortAll()}
+    componentDidUpdate(prevProps:any) {if (this.props.mechHolder !== prevProps.mechHolder){this.sortAll()}}
 
     render() {
     return (

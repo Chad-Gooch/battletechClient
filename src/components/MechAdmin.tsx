@@ -88,12 +88,12 @@ export default class MechAdmin extends Component<any,any> {
                         <th style={{width:'100px', color:'white'}}>freeTon</th>
                         <th style={{width:'100px', color:'white'}}>walk</th>
                         <th style={{width:'100px', color:'white'}}>maxJet</th>
-                        <th style={{width:'100px', color:'white'}}>head</th>
-                        <th style={{width:'100px', color:'white'}}>rightArm</th>
-                        <th style={{width:'100px', color:'white'}}>rightTorso</th>
-                        <th style={{width:'100px', color:'white'}}>Core</th>
-                        <th style={{width:'100px', color:'white'}}>leftTorso</th>
-                        <th style={{width:'100px', color:'white'}}>leftArm</th>
+                        <th style={{width:'100px', color:'white'}}>head<div style={{width:'100px', padding:'0px', margin:'auto'}}>B E M S</div></th>
+                        <th style={{width:'100px', color:'white'}}>rightArm<div style={{width:'100px', padding:'0px', margin:'auto'}}>B E M S</div></th>
+                        <th style={{width:'100px', color:'white'}}>rightTorso<div style={{width:'100px', padding:'0px', margin:'auto'}}>B E M S</div></th>
+                        <th style={{width:'100px', color:'white'}}>Core<div style={{width:'100px', padding:'0px', margin:'auto'}}>B E M S</div></th>
+                        <th style={{width:'100px', color:'white'}}>leftTorso<div style={{width:'100px', padding:'0px', margin:'auto'}}>B E M S</div></th>
+                        <th style={{width:'100px', color:'white'}}>leftArm<div style={{width:'100px', padding:'0px', margin:'auto'}}>B E M S</div></th>
                         <th style={{width:'100px', color:'white'}}>DLC</th>
                         <th style={{width:'100px', color:'black'}}>____</th>
                         <th style={{width:'100px', color:'black'}}>____</th>
