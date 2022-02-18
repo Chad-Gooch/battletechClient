@@ -68,13 +68,18 @@ export default class TeamBuilder extends Component<any,any> {
         this.setState({activeMech:tempHolder})
     }
 
+    saveCalculations = (full:number[]) => {
+        this.setState({activeMech:full})
+    }
+
     childProps = { 
         mechHolder:this.props.mechHolder,
         wpnHolder:this.props.wpnHolder,
         userData:this.props.userData,
         toggle:this.togglePop,
         setBuild:this.setBuild,
-        changeArray:this.changeArray
+        changeArray:this.changeArray,
+        saveCalculations:this.saveCalculations
     }
 
     saveTeam = () => {
@@ -103,7 +108,7 @@ export default class TeamBuilder extends Component<any,any> {
         if (mechArray[0] === 0) {show = 'Get Started'} else {
         let answer:MechInterface = this.props.mechHolder.find((x:MechInterface) => x.id === mechArray[0])
         show = answer.model};         
-        return( <div>{show}</div>)
+        return( <div><div><u>{show}</u></div><br></br><div>Alpha damage:  {mechArray[52]}</div><div>Stability Damage:  {mechArray[53]}</div><div>Heat Generation:  {mechArray[54]}</div><div>Heatsinks: {mechArray[50]}</div><div>JumpJets: {mechArray[51]}</div></div>)
     }
 
     render() {
@@ -114,19 +119,19 @@ export default class TeamBuilder extends Component<any,any> {
                     <h3>TeamBuilder</h3>
                     <Container>
                         <Row>
-                            <Col><div style={{width:'250px', height:'500px', background:'black'}} onClick={()=>this.togglePop(this.state.mech1, 'mech1')}>
+                            <Col><div style={{width:'250px', height:'250px', background:'black'}} onClick={()=>this.togglePop(this.state.mech1, 'mech1')}>
                                 <h2><u>Mech 1</u></h2>
                                 <div>{this.displayBuild(this.state.mech1)}</div>
                                 </div></Col>
-                            <Col><div style={{width:'250px', height:'500px', background:'black'}} onClick={()=>this.togglePop(this.state.mech2, 'mech2')}>
+                            <Col><div style={{width:'250px', height:'250px', background:'black'}} onClick={()=>this.togglePop(this.state.mech2, 'mech2')}>
                                 <h2><u>Mech 2</u></h2>
                                 <div>{this.displayBuild(this.state.mech2)}</div>
                                 </div></Col>
-                            <Col><div style={{width:'250px', height:'500px', background:'black'}} onClick={()=>this.togglePop(this.state.mech3, 'mech3')}>
+                            <Col><div style={{width:'250px', height:'250px', background:'black'}} onClick={()=>this.togglePop(this.state.mech3, 'mech3')}>
                                 <h2><u>Mech 3</u></h2>
                                 <div>{this.displayBuild(this.state.mech3)}</div>
                                 </div></Col>
-                            <Col><div style={{width:'250px', height:'500px', background:'black'}} onClick={()=>this.togglePop(this.state.mech4, 'mech4')}>
+                            <Col><div style={{width:'250px', height:'250px', background:'black'}} onClick={()=>this.togglePop(this.state.mech4, 'mech4')}>
                                 <h2><u>Mech 4</u></h2>
                                 <div>{this.displayBuild(this.state.mech4)}</div>
                                 </div></Col>

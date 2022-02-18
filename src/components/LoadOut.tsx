@@ -110,19 +110,51 @@ export default class LoadOut extends Component<any,any> {
         }
         return(displayItem)
     }
+ 
+    calculate = () => {
+        let currentState = this.props.activeMech;
+        let sink = 0;
+        let jump = 0;
+        let dam = 0;
+        let stab = 0;
+        let heat = -30;
+        for (let i = 1; i < 50 ; i++) {
+            if (this.props.activeMech[i] === 0) {
+                
+            } else if (this.props.activeMech[i] === 99) {
+                heat = (heat+3);
+                jump = (jump + 1);
+            } else if (this.props.activeMech[i] === 98) {
+                heat = (heat-3);
+                sink = (sink + 1);
+            } else {
+                let locateWpn:WpnInterface = this.props.wpnHolder.find((x:WpnInterface) => x.id === this.props.activeMech[i]);
+                dam = (dam + (locateWpn.shots*locateWpn.damage));
+                stab = (stab + (locateWpn.shots*locateWpn.stability));
+                heat = (heat + locateWpn.heat);
+            }
+        };
+        currentState[50] = sink;
+        currentState[51] = jump;
+        currentState[52] = dam;
+        currentState[53] = stab;
+        currentState[54] = heat;
+        this.props.saveCalculations(currentState)
+    }
+    
+    saveBuild = () => {
+        this.calculate()
+        this.props.toggle()
+        this.props.setBuild()
+    }
 
     childProps = { 
         mechHolder:this.props.mechHolder,
         wpnHolder:this.props.wpnHolder,
         userData:this.props.userData,
         toggleMech:this.toggleMechPop,
-        selectWpn:this.selectWpn
+        selectWpn:this.selectWpn,
         }
-
-    saveBuild = () => {
-        this.props.toggle()
-        this.props.setBuild()
-    }
 
     render() {
     return (
@@ -206,7 +238,7 @@ export default class LoadOut extends Component<any,any> {
             </Container>
             <Button style={{width:'150px', backgroundColor:'black'}} onClick={()=>this.saveBuild()}>Save</Button>
         </div>:
-            (this.state.select)?<LoadMech {...this.childProps}/>:<LoadWpn {...this.childProps} id={this.state.id}/>}
+            (this.state.select)?<LoadMech {...this.childProps}/>:<LoadWpn {...this.childProps} id={this.state.id} currentMech={this.state.currentMech} location={this.state.currentLoc}/>}
         </div>
     );
 }}
