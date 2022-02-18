@@ -28,8 +28,13 @@ export default class LoadWpn extends Component<any,any> {
     };
 
     loadAvailable = () => {
+        let finish = [];
+        if (this.props.location === 'foot') {
+            finish = [0,0,0,0]
+        } else {
         let startPoint = this.props.currentMech[this.props.location];
-        let finish = [(Math.floor(startPoint[0])),(Math.floor(startPoint[1])),(Math.floor(startPoint[2])),(Math.floor(startPoint[3]))];
+        finish = [(Math.floor(startPoint[0])),(Math.floor(startPoint[1])),(Math.floor(startPoint[2])),(Math.floor(startPoint[3]))];
+        };
         this.setState({currentArr:finish});
         let ballistic = [];
         let energy = [];
