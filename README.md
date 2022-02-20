@@ -13,7 +13,11 @@ index: 0        primary key from the Mech database.(indicating selected mech)
 index: 1-49     primary key from the Wpn database.(indicating equipment at location on mech)
 index: 50-54    calculated values based on the equipment in index 1-49(calculated based on values from Wpn database of the primary keys)
 
-
+The Mech table contains several locations, each location is an array with 4 datapoints.
+index: 0        number of items from the Wpn array with a "type" of "ballistic" allowed at that location on the mech.
+index: 1        number of items from the Wpn array with a "type" of "energy" allowed at that location on the mech.
+index: 2        number of items from the Wpn array with a "type" of "missile" allowed at that location on the mech.
+index: 3        number of items from the Wpn array with a "type" of "support" allowed at that location on the mech.
 
 
 
